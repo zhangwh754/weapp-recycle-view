@@ -10,28 +10,10 @@
     "backgroundTextStyle": "dark",
     "navigationStyle": "custom"
   },
-  "networkTimeout": {
-    "request": 10000,
-    "connectSocket": 10000,
-    "uploadFile": 10000,
-    "downloadFile": 10000
-  },
   "debug": false,
   "sitemapLocation": "sitemap.json",
-  "usingComponents": {
-    "mp-navigation-bar": "components/navigation-bar/navigation-bar"
-  },
-  "permission": {
-    "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序定位"
-    }
-  },
   "useExtendedLib": {
     "weui": true
   },
-  "requiredPrivateInfos": [
-    "getLocation",
-    "chooseLocation"
-  ],
   "lazyCodeLoading": "requiredComponents"
 }
