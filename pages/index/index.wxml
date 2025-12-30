@@ -1,4 +1,16 @@
-<navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<navigation-bar title="商品列表" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 <scroll-view class="scroll-area" type="list" scroll-y>
-  <view class="intro">欢迎使用代码片段，可在控制台查看代码片段的说明和文档</view>
+  <view class="product-list">
+    <product-item
+      wx:for="{{products}}"
+      wx:key="id"
+      product="{{item}}"
+      bind:tap="onProductTap"
+    ></product-item>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-tip" wx:if="{{products.length > 0}}">
+    <text>已加载全部 {{products.length}} 件商品</text>
+  </view>
 </scroll-view>

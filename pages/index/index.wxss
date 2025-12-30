@@ -2,6 +2,7 @@ page {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background: #f5f5f5;
 }
 
 .scroll-area {
@@ -9,7 +10,14 @@ page {
   overflow-y: hidden;
 }
 
-.intro {
-  padding: 30px;
+.product-list {
+  padding-top: 20rpx;
+}
+
+.loading-tip {
+  padding: 30rpx;
   text-align: center;
+  font-size: 24rpx;
+  color: #999;
+  background: #fff;
 }

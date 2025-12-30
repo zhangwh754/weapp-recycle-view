@@ -1,11 +1,26 @@
-const app = getApp()
+const { mockProducts } = require('./data/index.js');
 
 Page({
   data: {
+    products: []
+  },
 
-  },
   onLoad() {
-    console.log('代码片段是一种迷你、可分享的小程序或小游戏项目，可用于分享小程序和小游戏的开发经验、展示组件和 API 的使用、复现开发问题和 Bug 等。可点击以下链接查看代码片段的详细文档：')
-    console.log('https://developers.weixin.qq.com/miniprogram/dev/devtools/minicode.html')
+    // 加载商品数据
+    this.setData({
+      products: mockProducts
+    });
+
+    console.log(`已加载 ${mockProducts.length} 条商品数据`);
   },
-})
+
+  // 点击商品
+  onProductTap(e) {
+    const { product } = e.detail;
+    console.log('点击商品:', product);
+    wx.showToast({
+      title: `点击了商品${product.id}`,
+      icon: 'none'
+    });
+  }
+});
