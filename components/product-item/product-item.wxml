@@ -1,4 +1,4 @@
-<view class="product-item" bind:tap="onTap">
+<view class="product-item" catch:tap="onTap">
   <!-- 左侧图片 -->
   <view class="product-image-wrap">
     <image class="product-image" src="{{product.image}}" mode="aspectFill"></image>

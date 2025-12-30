@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "product-item": "/components/product-item/product-item"
+    "product-item": "/components/product-item/product-item",
+    "virtual-list": "/components/virtual-list/virtual-list"
   }
 }

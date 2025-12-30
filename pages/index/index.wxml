@@ -1,24 +1,15 @@
 <navigation-bar title="商品列表" back="{{false}}" color="black" background="#FFF"></navigation-bar>
-<scroll-view
-  class="scroll-area"
-  type="list"
-  scroll-y
-  bindscroll="onScroll"
-  scroll-into-view="{{scrollIntoView}}"
+
+<virtual-list
+  list="{{allProducts}}"
+  itemHeight="220"
+  initCount="{{20}}"
+  bind:visiblechange="onVisibleChange"
 >
-  <!-- 上方占位区域 -->
-  <view style="height: {{upperHeight}}px;"></view>
-
-  <!-- 可见商品列表 -->
-  <view class="product-list">
-    <product-item
-      wx:for="{{visibleProducts}}"
-      wx:key="id"
-      product="{{item}}"
-      bind:tap="onProductTap"
-    ></product-item>
-  </view>
-
-  <!-- 下方占位区域 -->
-  <view style="height: {{lowerHeight}}px;"></view>
-</scroll-view>
+  <product-item
+    wx:for="{{visibleProducts}}"
+    wx:key="id"
+    product="{{item}}"
+    bind:tap="onProductTap"
+  ></product-item>
+</virtual-list>

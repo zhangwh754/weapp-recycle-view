@@ -1,0 +1,12 @@
+<scroll-view class="virtual-scroll-area" type="list" scroll-y bindscroll="onScroll">
+  <!-- 上方占位区域 -->
+  <view class="skeleton" style="height: {{upperHeight}}px;"></view>
+
+  <!-- 可见列表插槽 -->
+  <view class="virtual-list-content">
+    <slot></slot>
+  </view>
+
+  <!-- 下方占位区域 -->
+  <view class="skeleton" style="height: {{lowerHeight}}px;"></view>
+</scroll-view>

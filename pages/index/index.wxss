@@ -5,12 +5,7 @@ page {
   background: #f5f5f5;
 }
 
-.scroll-area {
+virtual-list {
   flex: 1;
-  overflow-y: hidden;
   height: 100%;
-}
-
-.product-list {
-  /* 移除padding，确保高度计算准确 */
 }
