@@ -9,7 +9,7 @@ function stringToColor(str) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
   const color = Math.abs(hash).toString(16);
-  return '#' + color.padStart(6, '0');
+  return "#" + color.padStart(6, "0");
 }
 
 /**
@@ -43,9 +43,16 @@ function generateStock() {
  * 商品分类列表
  */
 const categories = [
-  '电子产品', '服装鞋帽', '食品饮料', '家居用品',
-  '美妆护肤', '运动户外', '图书文具', '母婴用品',
-  '汽车用品', '数码配件'
+  "电子产品",
+  "服装鞋帽",
+  "食品饮料",
+  "家居用品",
+  "美妆护肤",
+  "运动户外",
+  "图书文具",
+  "母婴用品",
+  "汽车用品",
+  "数码配件",
 ];
 
 /**
@@ -72,8 +79,11 @@ function generateMockProducts(count = 3000) {
       description: `这是${category}的高品质商品，型号${i}，具有优异的性能和性价比。`,
       sales: Math.floor(Math.random() * 10000),
       rating: (Math.random() * 2 + 3).toFixed(1), // 3.0-5.0之间的评分
-      tags: Math.random() > 0.5 ? ['热销'] : Math.random() > 0.5 ? ['新品'] : [],
-      createTime: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString()
+      tags:
+        Math.random() > 0.5 ? ["热销"] : Math.random() > 0.5 ? ["新品"] : [],
+      createTime: new Date(
+        Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000,
+      ).toISOString(),
     });
   }
 
@@ -89,5 +99,5 @@ module.exports = {
   mockProducts,
   generateMockProducts,
   stringToColor,
-  generateProductImage
+  generateProductImage,
 };

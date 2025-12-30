@@ -3,9 +3,7 @@
   "setting": {
     "ignoreUploadUnusedFiles": true,
     "urlCheck": false,
-    "useCompilerPlugins": [
-      "sass"
-    ],
+    "useCompilerPlugins": ["sass"],
     "es6": true,
     "enhance": false,
     "postcss": true,

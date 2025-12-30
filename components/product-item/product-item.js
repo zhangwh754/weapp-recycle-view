@@ -5,23 +5,21 @@ Component({
   properties: {
     product: {
       type: Object,
-      value: {}
-    }
+      value: {},
+    },
   },
 
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   methods: {
     // 点击商品项
     onTap() {
-      this.triggerEvent('tap', {
-        product: this.data.product
+      this.triggerEvent("tap", {
+        product: this.data.product,
       });
-    }
-  }
+    },
+  },
 });

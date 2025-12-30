@@ -19,10 +19,14 @@ Page({
   // 监听虚拟列表组件的可见数据变化
   onVisibleChange(e) {
     const { visibleProducts, startIndex, endIndex } = e.detail;
-    console.log("可见商品:", { startIndex, endIndex, count: visibleProducts.length });
+    console.log("可见商品:", {
+      startIndex,
+      endIndex,
+      count: visibleProducts.length,
+    });
     // 更新页面的 visibleProducts，插槽内容会重新渲染
     this.setData({
-      visibleProducts
+      visibleProducts,
     });
   },
 

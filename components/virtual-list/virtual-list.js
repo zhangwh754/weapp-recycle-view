@@ -9,17 +9,17 @@ Component({
         if (newVal && newVal.length > 0 && this.itemHeightPx) {
           this.initVisibleList();
         }
-      }
+      },
     },
     // 单个元素的高度（rpx）
     itemHeight: {
       type: Number,
-      value: 220
+      value: 220,
     },
     // 初始化显示的数据条数
     initCount: {
       type: Number,
-      value: 20
+      value: 20,
     },
     // 预设的可见数据（可选）
     visibleProducts: {
@@ -28,21 +28,21 @@ Component({
       observer: function (newVal) {
         if (newVal && newVal.length > 0) {
           this.setData({
-            visibleList: newVal
+            visibleList: newVal,
           });
         }
-      }
+      },
     },
     // 可视区域倍数
     viewportScale: {
       type: Number,
-      value: 2
+      value: 2,
     },
     // 缓冲区数量（上下各多渲染的数量）
     bufferCount: {
       type: Number,
-      value: 5
-    }
+      value: 5,
+    },
   },
 
   data: {
@@ -58,7 +58,7 @@ Component({
     attached() {
       // 初始化系统信息
       this.initSystemInfo();
-    }
+    },
   },
 
   methods: {
@@ -72,7 +72,7 @@ Component({
 
       // 计算可视区域可以显示的商品数量
       const visibleCount = Math.ceil(
-        (res.windowHeight * this.properties.viewportScale) / itemHeightPx
+        (res.windowHeight * this.properties.viewportScale) / itemHeightPx,
       );
 
       this.itemHeightPx = itemHeightPx;
@@ -93,7 +93,7 @@ Component({
       const endIndex = Math.min(initCount - 1, this.properties.list.length - 1);
       console.log("初始化可见列表:", {
         initCount,
-        endIndex
+        endIndex,
       });
       this.updateVisibleProducts(0, endIndex);
     },
@@ -125,7 +125,7 @@ Component({
       // 计算结束索引
       const endIndex = Math.min(
         startIndex + this.visibleCount + this.properties.bufferCount * 2,
-        this.properties.list.length - 1
+        this.properties.list.length - 1,
       );
 
       // 如果索引发生变化，才更新数据
@@ -150,15 +150,19 @@ Component({
 
       // 如果没有传入endIndex，则计算一个默认值
       if (endIndex === undefined || endIndex === null) {
-        endIndex = startIndex + this.visibleCount + this.properties.bufferCount * 2;
+        endIndex =
+          startIndex + this.visibleCount + this.properties.bufferCount * 2;
         endIndex = Math.min(endIndex, this.properties.list.length - 1);
       }
 
       // 添加缓冲区，上下各多渲染几条
-      const actualStartIndex = Math.max(0, startIndex - this.properties.bufferCount);
+      const actualStartIndex = Math.max(
+        0,
+        startIndex - this.properties.bufferCount,
+      );
       const actualEndIndex = Math.min(
         endIndex + this.properties.bufferCount,
-        this.properties.list.length - 1
+        this.properties.list.length - 1,
       );
 
       // 避免重复更新相同的范围
@@ -171,7 +175,7 @@ Component({
 
       const visibleList = this.properties.list.slice(
         actualStartIndex,
-        actualEndIndex + 1
+        actualEndIndex + 1,
       );
 
       // 计算上下占位高度
@@ -188,14 +192,14 @@ Component({
       });
 
       console.log(
-        `组件内部可见列表更新: ${actualStartIndex} - ${actualEndIndex}, 共 ${visibleList.length} 条`
+        `组件内部可见列表更新: ${actualStartIndex} - ${actualEndIndex}, 共 ${visibleList.length} 条`,
       );
 
       // 触发事件，将visibleProducts传递到外部
       this.triggerEvent("visiblechange", {
         visibleProducts: visibleList,
         startIndex: actualStartIndex,
-        endIndex: actualEndIndex
+        endIndex: actualEndIndex,
       });
     },
   },
@@ -206,6 +210,6 @@ Component({
       if (this.scrollTimer) {
         clearTimeout(this.scrollTimer);
       }
-    }
-  }
+    },
+  },
 });
