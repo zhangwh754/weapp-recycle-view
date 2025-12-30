@@ -16,6 +16,11 @@ Page({
   BUFFER_COUNT: 5, // 缓冲区数量（上下各多渲染5条）
   VIEWPORT_SCALE: 2, // 可视区域倍数（显示屏幕高度的2倍）
 
+  // 滚动节流相关
+  lastScrollTop: 0,
+  scrollTimer: null,
+  isScrolling: false,
+
   onLoad() {
     setTimeout(() => {
       // 加载商品数据
@@ -56,9 +61,26 @@ Page({
     this.updateVisibleProducts(0, endIndex);
   },
 
-  // 监听滚动事件
+  // 监听滚动事件（添加节流和防抖）
   onScroll(e) {
     const scrollTop = e.detail.scrollTop;
+
+    // 节流：只有滚动距离超过阈值才触发更新
+    const scrollDiff = Math.abs(scrollTop - this.lastScrollTop);
+    const threshold = this.itemHeight * 0.5; // 半个商品高度的阈值
+
+    // 如果滚动距离太小，不处理
+    if (scrollDiff < threshold && this.isScrolling) {
+      return;
+    }
+
+    this.lastScrollTop = scrollTop;
+    this.isScrolling = true;
+
+    // 清除之前的定时器
+    if (this.scrollTimer) {
+      clearTimeout(this.scrollTimer);
+    }
 
     // 计算起始索引
     const startIndex = Math.floor(scrollTop / this.itemHeight);
@@ -76,6 +98,11 @@ Page({
     ) {
       this.updateVisibleProducts(startIndex, endIndex);
     }
+
+    // 设置定时器，延迟重置滚动状态
+    this.scrollTimer = setTimeout(() => {
+      this.isScrolling = false;
+    }, 100);
   },
 
   // 更新可见商品列表
@@ -92,6 +119,14 @@ Page({
       endIndex + this.BUFFER_COUNT,
       this.data.allProducts.length - 1
     );
+
+    // 避免重复更新相同的范围
+    if (
+      actualStartIndex === this.data.startIndex &&
+      actualEndIndex === this.data.endIndex
+    ) {
+      return;
+    }
 
     const visibleProducts = this.data.allProducts.slice(
       actualStartIndex,
@@ -125,4 +160,11 @@ Page({
       icon: "none",
     });
   },
+
+  onUnload() {
+    // 清理定时器
+    if (this.scrollTimer) {
+      clearTimeout(this.scrollTimer);
+    }
+  }
 });
