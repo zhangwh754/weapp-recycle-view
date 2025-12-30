@@ -81,7 +81,7 @@ function generateMockProducts(count = 3000) {
 }
 
 // 生成3000条商品数据
-const mockProducts = generateMockProducts(100);
+const mockProducts = generateMockProducts(1200);
 
 console.log(`已生成 ${mockProducts.length} 条商品数据`);
 

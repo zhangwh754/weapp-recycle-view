@@ -8,16 +8,9 @@ page {
 .scroll-area {
   flex: 1;
   overflow-y: hidden;
+  height: 100%;
 }
 
 .product-list {
-  padding-top: 20rpx;
-}
-
-.loading-tip {
-  padding: 30rpx;
-  text-align: center;
-  font-size: 24rpx;
-  color: #999;
-  background: #fff;
+  /* 移除padding，确保高度计算准确 */
 }
