@@ -2,18 +2,54 @@ const { mockProducts } = require("./data/index.js");
 
 Page({
   data: {
-    allProducts: [], // 所有商品数据
+    allProducts: [], // 已加载的商品数据
     visibleProducts: [], // 当前可见的商品数据
+    loading: false, // 是否正在加载
+    currentPage: 0, // 当前页码
+    pageSize: 30, // 每页数量
+    totalProducts: 166, // 总数据量
   },
 
   onLoad() {
+    // 初始加载第一页数据
+    this.loadMoreData();
+  },
+
+  // 加载更多数据
+  loadMoreData() {
+    // 如果正在加载或已达到总数，则不再加载
+    if (this.data.loading || this.data.allProducts.length >= this.data.totalProducts) {
+      return;
+    }
+
+    this.setData({
+      loading: true,
+    });
+
+    // 模拟网络延迟
     setTimeout(() => {
-      // 加载商品数据
+      const currentPage = this.data.currentPage;
+      const startIndex = currentPage * this.data.pageSize;
+      const endIndex = Math.min(startIndex + this.data.pageSize, this.data.totalProducts);
+
+      // 获取这一页的数据
+      const newProducts = mockProducts.slice(startIndex, endIndex);
+
+      // 将新数据追加到已有数据中
       this.setData({
-        allProducts: mockProducts,
+        allProducts: [...this.data.allProducts, ...newProducts],
+        currentPage: currentPage + 1,
+        loading: false,
       });
-      console.log(`已加载 ${mockProducts.length} 条商品数据`);
-    }, 1500);
+
+      console.log(`已加载第 ${currentPage + 1} 页，新增 ${newProducts.length} 条数据，总共 ${this.data.allProducts.length} 条`);
+    }, 500);
+  },
+
+  // 滚动到底部事件
+  onScrollToLower() {
+    console.log("滚动到底部，触发加载更多");
+    this.loadMoreData();
   },
 
   // 监听虚拟列表组件的可见数据变化

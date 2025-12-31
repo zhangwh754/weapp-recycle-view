@@ -1,15 +1,8 @@
 <navigation-bar title="商品列表" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 
-<virtual-list
-  list="{{allProducts}}"
-  itemHeight="220"
-  initCount="{{20}}"
-  bind:visiblechange="onVisibleChange"
->
-  <product-item
-    wx:for="{{visibleProducts}}"
-    wx:key="id"
-    product="{{item}}"
-    bind:tap="onProductTap"
-  ></product-item>
+<virtual-list list="{{allProducts}}" itemHeight="220" initCount="{{20}}" bind:visiblechange="onVisibleChange"
+  bind:scrolltolower="onScrollToLower">
+  <product-item wx:for="{{visibleProducts}}" wx:key="id" product="{{item}}" bind:tap="onProductTap"></product-item>
+
+  <view style="height: 220rpx;color: red;text-align: center;line-height: 220rpx;font-size: 2em;">到底了</view>
 </virtual-list>

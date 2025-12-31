@@ -142,6 +142,16 @@ Component({
       }, 100);
     },
 
+    // 滚动到顶部事件
+    onScrollToUpper(e) {
+      this.triggerEvent("scrolltoupper", e.detail);
+    },
+
+    // 滚动到底部事件
+    onScrollToLower(e) {
+      this.triggerEvent("scrolltolower", e.detail);
+    },
+
     // 更新可见列表
     updateVisibleProducts(startIndex, endIndex) {
       if (!this.properties.list || this.properties.list.length === 0) {

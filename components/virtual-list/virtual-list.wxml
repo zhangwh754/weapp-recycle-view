@@ -1,4 +1,11 @@
-<scroll-view class="virtual-scroll-area" type="list" scroll-y bindscroll="onScroll">
+<scroll-view
+  class="virtual-scroll-area"
+  type="list"
+  scroll-y
+  bindscroll="onScroll"
+  bindscrolltoupper="onScrollToUpper"
+  bindscrolltolower="onScrollToLower"
+>
   <!-- 上方占位区域 -->
   <view class="skeleton" style="height: {{upperHeight}}px;"></view>
 
