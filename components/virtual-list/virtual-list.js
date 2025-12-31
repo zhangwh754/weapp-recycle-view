@@ -4,10 +4,16 @@ Component({
     list: {
       type: Array,
       value: [],
-      observer: function (newVal) {
+      observer: function (newVal, oldVal) {
         // 当list数据变化时，重新初始化可见列表
         if (newVal && newVal.length > 0 && this.itemHeightPx) {
-          this.initVisibleList();
+          // 如果是首次初始化，或者是从空数组变为有数据
+          if (!this.data.isInitialized || (oldVal && oldVal.length === 0)) {
+            this.initVisibleList();
+          } else {
+            // 数据追加的情况，只更新下方占位高度，保持滚动位置
+            this.updateLowerHeight();
+          }
         }
       },
     },
@@ -52,6 +58,7 @@ Component({
     scrollTop: 0, // 滚动距离
     upperHeight: 0, // 上方占位高度
     lowerHeight: 0, // 下方占位高度
+    isInitialized: false, // 是否已初始化
   },
 
   lifetimes: {
@@ -96,6 +103,9 @@ Component({
         endIndex,
       });
       this.updateVisibleProducts(0, endIndex);
+      this.setData({
+        isInitialized: true,
+      });
     },
 
     // 监听滚动事件
@@ -150,6 +160,18 @@ Component({
     // 滚动到底部事件
     onScrollToLower(e) {
       this.triggerEvent("scrolltolower", e.detail);
+    },
+
+    // 更新下方占位高度（用于数据追加时）
+    updateLowerHeight() {
+      const lowerHeight =
+        (this.properties.list.length - this.data.endIndex - 1) * this.itemHeightPx;
+
+      this.setData({
+        lowerHeight,
+      });
+
+      console.log(`数据追加，更新下方占位高度: ${lowerHeight}px`);
     },
 
     // 更新可见列表

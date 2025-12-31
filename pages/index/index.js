@@ -6,8 +6,8 @@ Page({
     visibleProducts: [], // 当前可见的商品数据
     loading: false, // 是否正在加载
     currentPage: 0, // 当前页码
-    pageSize: 30, // 每页数量
-    totalProducts: 166, // 总数据量
+    pageSize: 3000, // 每页数量
+    totalProducts: 3000, // 总数据量
   },
 
   onLoad() {
