@@ -112,44 +112,42 @@ Component({
     onScroll(e) {
       const scrollTop = e.detail.scrollTop;
 
-      // 节流：只有滚动距离超过阈值才触发更新
-      const scrollDiff = Math.abs(scrollTop - this.lastScrollTop);
-      const threshold = this.itemHeightPx * 0.5; // 半个商品高度的阈值
+      // 记录最新的滚动位置
+      this.pendingScrollTop = scrollTop;
 
-      // 如果滚动距离太小，不处理
-      if (scrollDiff < threshold && this.isScrolling) {
-        return;
+      // 如果已有防抖定时器，清除并重新设置
+      if (this.debounceTimer) {
+        clearTimeout(this.debounceTimer);
       }
 
-      this.lastScrollTop = scrollTop;
-      this.isScrolling = true;
+      // 设置防抖定时器，滚动停止后只更新一次
+      this.debounceTimer = setTimeout(() => {
+        const finalScrollTop = this.pendingScrollTop;
 
-      // 清除之前的定时器
-      if (this.scrollTimer) {
-        clearTimeout(this.scrollTimer);
-      }
+        // 计算起始索引（基于最终滚动位置）
+        const startIndex = Math.floor(finalScrollTop / this.itemHeightPx);
 
-      // 计算起始索引
-      const startIndex = Math.floor(scrollTop / this.itemHeightPx);
+        // 计算结束索引
+        const endIndex = Math.min(
+          startIndex + this.visibleCount + this.properties.bufferCount * 2,
+          this.properties.list.length - 1,
+        );
 
-      // 计算结束索引
-      const endIndex = Math.min(
-        startIndex + this.visibleCount + this.properties.bufferCount * 2,
-        this.properties.list.length - 1,
-      );
+        // 只在索引真正变化时才更新
+        if (
+          startIndex !== this.data.startIndex ||
+          endIndex !== this.data.endIndex
+        ) {
+          this.updateVisibleProducts(startIndex, endIndex);
+          console.log(
+            `滚动更新: ${startIndex} - ${endIndex}, scrollTop: ${finalScrollTop}px`
+          );
+        }
 
-      // 如果索引发生变化，才更新数据
-      if (
-        startIndex !== this.data.startIndex ||
-        endIndex !== this.data.endIndex
-      ) {
-        this.updateVisibleProducts(startIndex, endIndex);
-      }
-
-      // 设置定时器，延迟重置滚动状态
-      this.scrollTimer = setTimeout(() => {
+        // 更新上次处理的滚动位置
+        this.lastScrollTop = finalScrollTop;
         this.isScrolling = false;
-      }, 100);
+      }, 100); // 100ms防抖延迟
     },
 
     // 滚动到顶部事件
@@ -241,6 +239,9 @@ Component({
       // 清理定时器
       if (this.scrollTimer) {
         clearTimeout(this.scrollTimer);
+      }
+      if (this.debounceTimer) {
+        clearTimeout(this.debounceTimer);
       }
     },
   },
